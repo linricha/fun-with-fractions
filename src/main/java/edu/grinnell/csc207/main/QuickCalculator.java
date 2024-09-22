@@ -7,11 +7,15 @@ import edu.grinnell.csc207.util.BFRegisterSet;
 import edu.grinnell.csc207.util.BFCalcSystem;
 
 
+/**
+ * Runs QuickCalculator
+ * 
+ * @author Richard Lin
+ */
 public class QuickCalculator {
   
   
-  public static void main(String[] arg) throws Exception{
-    String[] args = {"3/9"};
+  public static void main(String[] args) throws Exception{
 
     PrintWriter pen = new PrintWriter(System.out, true);
     PrintWriter error = new PrintWriter(System.err, true);
@@ -25,5 +29,5 @@ public class QuickCalculator {
 
     BFCalcSystem.QuickCalculatorStart(pen, error, look, calcButton, cabinet, args);
 
-  } 
-}
+  } // main(String[] args)
+} // class QuickCalculator
