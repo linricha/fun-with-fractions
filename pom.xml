@@ -27,13 +27,14 @@
   <build>
     <pluginManagement>
       <plugins>
+      
 
         <plugin>
           <groupId>org.codehaus.mojo</groupId>
           <artifactId>exec-maven-plugin</artifactId>
           <version>3.3.0</version>
           <configuration>
-            <mainClass>edu.grinnell.csc207.Sample</mainClass>
+            <mainClass>edu.grinnell.csc207.InteractiveCalculator</mainClass>
           </configuration>
         </plugin>
 
@@ -53,7 +54,7 @@
             <archive>
               <manifest>
                 <addClasspath>true</addClasspath>
-                <mainClass>edu.grinnell.csc207.Sample</mainClass>
+                <mainClass>edu.grinnell.csc207.InteractiveCalculator</mainClass>
               </manifest>
             </archive>
           </configuration>
