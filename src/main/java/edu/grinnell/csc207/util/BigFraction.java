@@ -7,13 +7,14 @@ import java.math.BigInteger;
  *
  * @author Samuel A. Rebelsky
  * @author Slok Rajbhandari, Richard Lin (Lab)
- * @authot Richard Lin (MP2)
- * 
+ * @author Richard Lin (MP2)
+ *
  * MP2 Change Notes:
- *  Removed Constants, changed 'simplify' to 'reduction' in design decisions, changed multiply from non-static to static,
- *  removed warning notes from lab, altered toString() method so it can now print
- *  whole numbers and added reduction() call to this in toString(), altered multiply(BigFraction) method 
- *  by changing from static to non-static, added reduction method call to add and multiply in their returns. 
+ *  Removed Constants, changed 'simplify' to 'reduction' in design decisions, changed
+ *  multiply from non-static to static, removed warning notes from lab, altered toString()
+ *  method so it can now print whole numbers and added reduction() call to this in toString(),
+ *  altered multiply(BigFraction) method by changing from static to non-static, added reduction
+ *  method call to add and multiply in their returns.
  *  Altered constructors as well.
  */
 public class BigFraction {
@@ -27,7 +28,7 @@ public class BigFraction {
    * has a negative numerator, it is negative.
    *
    * (2) Fractions are not necessarily stored in simplified form. To
-   * obtain a fraction in simplified form, one must call the `reduction.` 
+   * obtain a fraction in simplified form, one must call the `reduction.`
    * method.
    */
 
@@ -36,10 +37,10 @@ public class BigFraction {
   // +--------+
 
   /** The numerator of the fraction. Can be positive, zero or negative. */
-  BigInteger num;
+  private BigInteger num;
 
   /** The denominator of the fraction. Must be non-negative. */
-  BigInteger denom;
+  private BigInteger denom;
 
   // +--------------+-------------------------------------------------
   // | Constructors |
@@ -57,7 +58,7 @@ public class BigFraction {
     this.num = numerator;
     this.denom = denominator;
 
-    //this.placeholderFracSet(); 
+    //this.placeholderFracSet();
   } // BigFraction(BigInteger, BigInteger)
 
   /**
@@ -71,7 +72,7 @@ public class BigFraction {
   public BigFraction(int numerator, int denominator) {
     this.num = BigInteger.valueOf(numerator);
     this.denom = BigInteger.valueOf(denominator);
-    
+
     this.placeholderFracSet();
 
   } // BigFraction(int, int)
@@ -80,20 +81,19 @@ public class BigFraction {
    * Build a new fraction by parsing a string.
    *
    * @param str
-   *   The fraction in string form
+   *   The fraction in string form.
    */
   public BigFraction(String str) {
     int location = str.indexOf('/');
 
     // Covers both cases of either the string having / or not
-    if (location == -1){
-      this.num = BigInteger.valueOf((long)Integer.decode(str));
+    if (location == -1) {
+      this.num = BigInteger.valueOf((long) Integer.decode(str));
       this.denom = BigInteger.valueOf(1);
-    }
-    else {
-      this.num = BigInteger.valueOf((long)Integer.decode(str.substring(0, location)));
-      this.denom = BigInteger.valueOf((long)Integer.decode(str.substring(location + 1)));
-    }
+    } else {
+      this.num = BigInteger.valueOf((long) Integer.decode(str.substring(0, location)));
+      this.denom = BigInteger.valueOf((long) Integer.decode(str.substring(location + 1)));
+    } // if/else
 
     this.placeholderFracSet();
   } // BigFraction
@@ -105,11 +105,11 @@ public class BigFraction {
   /**
    * Simplifies this using a placeholder BigFraction.
    */
-  public void placeholderFracSet(){
+  public void placeholderFracSet() {
     BigFraction placeholder = this.reduction();
     this.num = placeholder.numerator();
     this.denom = placeholder.denominator();
-  }
+  } // placeholderFracSet()
 
   /**
    * Add another faction to this fraction.
@@ -124,7 +124,7 @@ public class BigFraction {
     BigInteger resultDenominator;
 
     // The denominator of the result is the product of this object's
-    // denominator and addend's denominator
+    // denominator and addend's denominator.
     resultDenominator = this.denom.multiply(addend.denom);
     // The numerator is more complicated
     resultNumerator =
@@ -133,6 +133,7 @@ public class BigFraction {
     // Return the computed value
     return (new BigFraction(resultNumerator, resultDenominator)).reduction();
   } // add(BigFraction)
+
   /**
    * Express this fraction as a double.
    *
@@ -141,6 +142,7 @@ public class BigFraction {
   public double doubleValue() {
     return this.num.doubleValue() / this.denom.doubleValue();
   } // doubleValue()
+
   /**
    * Get the denominator of this fraction.
    *
@@ -159,9 +161,9 @@ public class BigFraction {
     return this.num;
   } // numerator()
 
-  /** 
+  /**
    * Convert this fraction to a string for ease of printing.
-   * 
+   *
    * !!! Altered by Richard Lin (MP2).
    *  Can now print whole numbers.
    *
@@ -176,9 +178,9 @@ public class BigFraction {
     } // if it's zero
 
     // Check for whole numbers
-    if (placeholder.denom.equals(new BigInteger("1"))){
+    if (placeholder.denom.equals(new BigInteger("1"))) {
       return placeholder.num.toString();
-    }
+    } // if
 
     // Lump together the string represention of the numerator,
     // a slash, and the string representation of the denominator
@@ -190,13 +192,13 @@ public class BigFraction {
 
   /**
    * Returns the result of multiplying two BigFractions.
-   * 
+   *
    * !!! Altered by Richard Lin (MP2) to change method from static to non-static.
-   * 
+   *
    * @param multiplier what to multiply 'this' BigFraction by.
    * @return the result of multiplication.
    */
-  public BigFraction multiply(BigFraction multiplier){
+  public BigFraction multiply(BigFraction multiplier) {
     BigInteger top = this.numerator();
     top = top.multiply(multiplier.numerator());
 
@@ -208,15 +210,13 @@ public class BigFraction {
 
   /**
    * Gives the fractional portion of Big Fraction when it would be a mixed fraction.
-   * 
+   *
    * @return a BigFraction less than 1 and greater than 0 when subtracted by a whole number.
    */
-  public BigFraction fractional(){
-    BigInteger num = this.numerator();
-    BigInteger denom = this.denominator();
+  public BigFraction fractional() {
 
-    BigInteger top = (num.mod(denom));
-    return new BigFraction(top, denom);
+    BigInteger top = (this.numerator().mod(this.denominator()));
+    return new BigFraction(top, this.denominator());
   } // fractional()
 
 
@@ -225,13 +225,13 @@ public class BigFraction {
 
   /**
    * Gives the result of dividing two Big Fractions.
-   * 
+   *
    * !!! Additional method added by Richard Lin (MP2).
-   * 
+   *
    * @param divisor the BigFraction that 'this' will be divided by.
    * @return the result of dividing 'this' by divisor.
    */
-  public BigFraction divide(BigFraction divisor){
+  public BigFraction divide(BigFraction divisor) {
     BigFraction flipped = new BigFraction(divisor.denominator(), divisor.numerator());
 
     return (this.multiply(flipped)).reduction();
@@ -240,13 +240,13 @@ public class BigFraction {
 
   /**
    * Gives the result of subtracting two Big Fractions.
-   * 
-   * !!! Additional method added by Richard Lin (MP2). 
-   * 
-   * @param minus the BigFraction that 'this' will be 
+   *
+   * !!! Additional method added by Richard Lin (MP2).
+   *
+   * @param minus the BigFraction that 'this' will be.
    * @return the result of subtraction.
    */
-  public BigFraction subtract(BigFraction minus){
+  public BigFraction subtract(BigFraction minus) {
     BigInteger top = (minus.numerator()).multiply(BigInteger.valueOf(-1));
 
     return (this.add(new BigFraction(top, minus.denominator()))).reduction();
@@ -255,12 +255,12 @@ public class BigFraction {
 
   /**
    * Gives the simplified fractional form of 'this'.
-   * 
+   *
    * !!! Additional method added by Richard Lin (MP2).
-   * 
+   *
    * @return a simplified fraction.
    */
-  public BigFraction reduction(){
+  public BigFraction reduction() {
     BigInteger top = this.numerator();
     BigInteger bottom = this.denominator();
 
@@ -272,52 +272,53 @@ public class BigFraction {
 
 
     // Marked down that the numerator is negative and remove negative sign.
-    if (topInt < 0){
+    if (topInt < 0) {
       topNeg = true;
       topInt *= -1;
     } // if
 
     // Marked down that the denominator is negative and remove negative sign.
-    if (bottomInt < 0){
+    if (bottomInt < 0) {
       botNeg = true;
       bottomInt *= -1;
     } // if
 
     // loops through dividing until i is eventually greater than numerator.
     // Simplify until no more simplification can be done.
-    for(int i = 2; i <= topInt; i++){
-      
+    for (int i = 2; i <= topInt; i++) {
+
       // Keeps simplifying both if can.
       // Stops when the divisor is removed completely.
-      while ((topInt % i == 0) && (bottomInt % i == 0)){
-        topInt = topInt/i;
-        bottomInt = bottomInt/i;
+      while ((topInt % i == 0) && (bottomInt % i == 0)) {
+        topInt = topInt / i;
+        bottomInt = bottomInt / i;
       } // while
 
     } // for
 
     // Make the numerator negative again if it was originally negative.
-    if (topNeg){
+    if (topNeg) {
       topInt *= -1;
     } // if
 
     // Make the denominator negative again if it was originally negative.
-    if (botNeg){
+    if (botNeg) {
       bottomInt *= -1;
     } // if
 
 
-    
-    // Make the numerator negative if the denominator is negative since the denominator should not be negative.
-    // Also, if the numerator and denominator are both negative, the negatives will cancel out.
-    if (bottomInt < 0){
+
+    // Make the numerator negative if the denominator is negative since
+    // the denominator should not be negative. Also, if the numerator and
+    // denominator are both negative, the negatives will cancel out.
+    if (bottomInt < 0) {
       topInt *= -1;
       bottomInt *= -1;
-    } // if 
+    } // if
 
 
-    BigInteger newTop = BigInteger.valueOf((long)topInt);
-    BigInteger newBottom = BigInteger.valueOf((long)bottomInt);
+    BigInteger newTop = BigInteger.valueOf((long) topInt);
+    BigInteger newBottom = BigInteger.valueOf((long) bottomInt);
 
     return new BigFraction(newTop, newBottom);
   } // reduction()

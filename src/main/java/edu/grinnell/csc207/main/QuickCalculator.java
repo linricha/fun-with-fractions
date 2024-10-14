@@ -8,14 +8,19 @@ import edu.grinnell.csc207.util.BFCalcSystem;
 
 
 /**
- * Runs QuickCalculator
- * 
+ * Runs QuickCalculator.
+ *
  * @author Richard Lin
  */
 public class QuickCalculator {
-  
-  
-  public static void main(String[] args) throws Exception{
+
+  /**
+   * Sets up and runs quickCalculator.
+   *
+   * @param args Command-line arguments to be read from.
+   * @throws Exception An exception from main.
+   */
+  public static void main(String[] args) throws Exception {
 
     PrintWriter pen = new PrintWriter(System.out, true);
     PrintWriter error = new PrintWriter(System.err, true);
@@ -27,7 +32,7 @@ public class QuickCalculator {
 
     calcButton.get();
 
-    BFCalcSystem.QuickCalculatorStart(pen, error, look, calcButton, cabinet, args);
+    BFCalcSystem.quickCalculatorStart(pen, error, look, calcButton, cabinet, args);
 
   } // main(String[] args)
 } // class QuickCalculator
