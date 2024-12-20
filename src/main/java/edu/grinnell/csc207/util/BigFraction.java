@@ -172,13 +172,8 @@ public class BigFraction {
   public String toString() {
     BigFraction placeholder = this.reduction();
 
-    // Special case: It's zero
-    if (placeholder.num.equals(BigInteger.ZERO)) {
-      return "0";
-    } // if it's zero
-
     // Check for whole numbers
-    if (placeholder.denom.equals(new BigInteger("1"))) {
+    if (placeholder.denom.equals(BigInteger.ONE)) {
       return placeholder.num.toString();
     } // if
 
